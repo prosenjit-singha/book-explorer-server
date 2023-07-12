@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix",
     "prettier:check": "npx prettier --write .",
     "prettier:format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "lint-prettier:check": "npm lint:check && npm prettier:check",
+    "lint-prettier:check": "npm run lint:check && npm run prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
@@ -37,6 +37,6 @@
     "typescript": "^5.1.6"
   },
   "lint-staged": {
-    "src/**/*.ts": "npm lint-prettier"
+    "src/**/*.ts": "npm run lint-prettier:check"
   }
 }
