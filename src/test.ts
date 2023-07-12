@@ -1,0 +1,1 @@
+const d = "test string";
