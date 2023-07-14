@@ -26,4 +26,10 @@ export const handleDuplicateError = (err: MongoServerError) => {
   return { error, message };
 };
 
-export default { handleValidationError, handleDuplicateError };
+export const handleCastError = (err: mongoose.Error.CastError) => {
+  return {
+    [err.path]: err.message,
+  };
+};
+
+export default { handleValidationError, handleDuplicateError, handleCastError };
