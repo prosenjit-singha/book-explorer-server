@@ -5,7 +5,7 @@ import type { UserRole } from "../../types/userRole.type";
 import config from "../../config";
 import ApiError from "../../errors/apiError";
 import { jwtHelpers } from "../../helpers/jwt.helper";
-import verifyUser from "../shared/verifyUser";
+import verifyUser from "../../shared/verifyUser";
 
 const authorize =
   (...requiredRoles: UserRole[]) =>

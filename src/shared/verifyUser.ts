@@ -1,8 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import ApiError from "../errors/apiError";
 import httpStatus from "http-status";
-// import AdminModel from "../modules/admin/admin.model";
-// import UserModel from "../modules/user/user.model";
+import UserModel from "../app/modules/user/user.model";
 
 const verifyUser = async (
   user?: JwtPayload,
@@ -15,21 +14,6 @@ const verifyUser = async (
       "'user' is not defined.",
     );
   }
-  // verify admin
-  if (user.role === "admin" || user.role === "super-admin") {
-    const data = await AdminModel.findById(user._id, { password: 0 });
-
-    if (!data) {
-      throw new ApiError(
-        httpStatus.NOT_FOUND,
-        errorMessage,
-        "User doesn't exist",
-      );
-    }
-
-    return data;
-  }
-
   // verify user
   const data = await UserModel.findById(user._id);
 
