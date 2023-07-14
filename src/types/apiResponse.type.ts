@@ -6,6 +6,7 @@ type ApiResponse<T = unknown> = {
   message: string;
   data: T | null;
   meta?: {
+    totalPages: number;
     page: number;
     limit: number;
     totalResults: number;
