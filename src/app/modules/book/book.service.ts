@@ -37,13 +37,9 @@ const getAllBooks = async (
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => {
         // minPrice
-        if (field === "minPrice") {
+        if (field === "publishedOn") {
           return {
-            price: { $gte: value },
-          };
-        } else if (field === "maxPrice") {
-          return {
-            price: { $lte: value },
+            publishedOn: { $eq: new Date(value as string) },
           };
         }
 
@@ -67,6 +63,7 @@ const getAllBooks = async (
     andConditions.length > 0 ? { $and: andConditions } : {};
 
   const data = await BookModel.find(whereConditions)
+    .select("-reviews")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)
@@ -83,7 +80,7 @@ const getAllBooks = async (
     sortBy,
     sortOrder,
     totalResults,
-    totalPages: Math.round(totalResults / limit),
+    totalPages: Math.round(totalResults / limit) + 1,
   };
 
   return { data, meta };

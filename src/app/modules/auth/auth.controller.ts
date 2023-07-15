@@ -2,7 +2,7 @@ import config from "../../../config";
 import catchAsync from "../../../shared/catchAsync";
 import AuthService from "./auth.service";
 
-const registerUser = catchAsync(async req => {
+const registerUser = catchAsync(async (req) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...data } = await AuthService.registerUser(req.body);
 
@@ -28,7 +28,7 @@ const loginUser = catchAsync(async (req, res) => {
   };
 });
 
-const logoutUser = catchAsync(async req => {
+const logoutUser = catchAsync(async (req) => {
   const data = await AuthService.logoutUser(req.user.id);
 
   return {

@@ -22,8 +22,6 @@ const auth =
         config.jwt.secret_key as Secret,
       );
 
-      console.log(requiredRoles);
-
       if (
         requiredRoles.length &&
         !requiredRoles.includes("all") &&

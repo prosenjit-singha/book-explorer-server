@@ -50,7 +50,7 @@ userSchema.static(
     msg = "Password doesn't match.",
     errMsg = "Password doesn't match.",
   ) {
-    const orCond = UserConst.uniqueId.map(field => ({ [field]: userId }));
+    const orCond = UserConst.uniqueId.map((field) => ({ [field]: userId }));
     const user = await this.findOne({ $or: orCond });
 
     if (!user) {

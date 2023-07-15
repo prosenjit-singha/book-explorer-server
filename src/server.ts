@@ -3,7 +3,7 @@ import config from "./config";
 import { Server } from "http";
 import { connectDB } from "./helpers/db.helper";
 
-process.on("uncaughtException", error => {
+process.on("uncaughtException", (error) => {
   console.log("UncaughtException", error);
   process.exit(1);
 });

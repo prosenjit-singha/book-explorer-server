@@ -15,7 +15,7 @@ const modules = [
   },
 ];
 
-modules.forEach(module => {
+modules.forEach((module) => {
   router.use(module.path, module.routes);
 });
 

@@ -18,6 +18,7 @@ const bookSchema = new Schema<Book>(
       ref: "Reviews",
       default: [],
     },
+    totalViews: { type: Number, default: 0 },
   },
   { timestamps: true },
 );

@@ -6,4 +6,5 @@ export type Book = {
   genre: string;
   publishedOn: Date;
   reviews: ObjectId;
+  totalViews: number;
 };

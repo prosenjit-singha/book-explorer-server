@@ -13,4 +13,6 @@ BookRoutes.post(
   BookController.createBook,
 );
 
+BookRoutes.get("/", auth("all"), BookController.getAllBooks);
+
 export default BookRoutes;
