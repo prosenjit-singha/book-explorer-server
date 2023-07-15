@@ -11,11 +11,11 @@ const userSchema = new Schema<User, UserModelType, UserMethods>(
     email: { type: String, required: true, trim: true, unique: true },
     fullName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
-    phoneNumber: { type: String, trim: true, unique: true },
-    address: { type: String, trim: true },
+    phoneNumber: { type: String, trim: true, unique: true, default: null },
+    address: { type: String, trim: true, default: null },
     role: { type: String, enum: UserConst.role, required: true },
-    status: { type: String, enum: UserConst.status, default: "" },
-    gender: { type: String, enum: UserConst.gender, default: undefined },
+    status: { type: String, enum: UserConst.status, default: "active" },
+    gender: { type: String, enum: [...UserConst.gender, null], default: null },
     dateOfBirth: { type: Date, default: null },
   },
   { timestamps: true },
@@ -38,7 +38,8 @@ userSchema.static(
     msg = "Password doesn't match.",
     errMsg = "Password doesn't match.",
   ) {
-    const user = await this.findOne({ _id: userId });
+    const orCond = UserConst.uniqueId.map(field => ({ [field]: userId }));
+    const user = await this.findOne({ $or: orCond });
 
     if (!user) {
       throw new ApiError(
@@ -48,12 +49,9 @@ userSchema.static(
       );
     }
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-      Number(config.bcrypt_salt_round),
-    );
+    const isMatched: boolean = await bcrypt.compare(password, user.password);
 
-    if (hashedPassword !== user.password) {
+    if (!isMatched) {
       throw new ApiError(httpStatus.BAD_REQUEST, msg, errMsg);
     }
 

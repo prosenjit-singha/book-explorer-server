@@ -7,10 +7,10 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 type NodeENV = "development" | "production";
 
 const jwt = {
-  secret: process.env.JWT_SECRET_KEY as Secret,
-  expire_in: process.env.JWT_EXPIRE_IN as string,
-  refresh_secret: process.env.JWT_REFRESH_SECRET_KEY as Secret,
-  refresh_expire_in: process.env.JWT_REFRESH_EXPIRE_IN as string,
+  secret_key: process.env.JWT_SECRET_KEY as Secret,
+  expires_in: process.env.JWT_EXPIRES_IN as string,
+  refresh_secret_key: process.env.JWT_REFRESH_SECRET_KEY as Secret,
+  refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN as string,
 };
 
 export default {

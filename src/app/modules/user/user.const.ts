@@ -4,6 +4,8 @@ export const role = ["super-admin", "admin", "user"] as const;
 
 export const status = ["active", "inactive", "deactivated", "blocked"] as const;
 
-const UserConst = { gender, role, status };
+export const uniqueId = ["email", "phoneNumber"];
+
+const UserConst = { gender, role, status, uniqueId };
 
 export default UserConst;
