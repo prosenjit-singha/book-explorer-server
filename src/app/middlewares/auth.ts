@@ -7,7 +7,7 @@ import ApiError from "../../errors/apiError";
 import { jwtHelpers } from "../../helpers/jwt.helper";
 import verifyUser from "../../shared/verifyUser";
 
-const authorize =
+const auth =
   (...requiredRoles: UserRole[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -45,4 +45,4 @@ const authorize =
     }
   };
 
-export default authorize;
+export default auth;

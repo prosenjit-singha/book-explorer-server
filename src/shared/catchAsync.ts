@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import ApiResponse from "../types/apiResponse.type";
 
+type ReqHandlerReturns = Partial<ApiResponse> & {
+  data: unknown;
+  message: string;
+};
 export type RequestHandler = (
   req: Request,
   res: Response,
   next: NextFunction,
-) => Promise<ApiResponse> | ApiResponse;
+) => Promise<ReqHandlerReturns> | ReqHandlerReturns;
 
 const catchAsync =
   (fn: RequestHandler) =>
@@ -15,7 +19,7 @@ const catchAsync =
 
       const apiRes: ApiResponse = {
         status: resData.status || 200,
-        message: resData.message,
+        message: resData.message || "Success",
         error: resData.error || null,
         data: resData.data || null,
         meta: resData?.meta,
