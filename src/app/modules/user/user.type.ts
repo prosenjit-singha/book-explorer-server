@@ -7,11 +7,11 @@ type Status = (typeof UserConst.status)[number];
 
 type User = {
   email: string;
-  role: UserRole;
   fullName: string;
   password: string;
-  address?: string;
   phoneNumber?: string;
+  address?: string;
+  role?: UserRole;
   gender?: Gender;
   dateOfBirth?: Date;
   createdAt?: Date;
