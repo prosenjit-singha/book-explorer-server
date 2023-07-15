@@ -11,12 +11,12 @@ const userSchema = new Schema<User, UserModelType, UserMethods>(
     email: { type: String, required: true, trim: true, unique: true },
     fullName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
-    role: { type: String, enum: UserConst.role, default: "user" },
-    address: { type: String, trim: true },
     phoneNumber: { type: String, trim: true, unique: true },
+    address: { type: String, trim: true },
+    role: { type: String, enum: UserConst.role, required: true },
+    status: { type: String, enum: UserConst.status, default: "" },
     gender: { type: String, enum: UserConst.gender, default: undefined },
     dateOfBirth: { type: Date, default: null },
-    status: { type: String, enum: UserConst.status, default: "active" },
   },
   { timestamps: true },
 );
@@ -61,6 +61,6 @@ userSchema.static(
   },
 );
 
-const UserModel = model<User, UserModelType>("User", userSchema);
+const UserModel = model<User, UserModelType>("user", userSchema);
 
 export default UserModel;

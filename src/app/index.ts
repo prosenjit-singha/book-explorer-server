@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
-app.use(router);
+app.use("/api/v1", router);
 
 app.use(globalErrorHandler);
 

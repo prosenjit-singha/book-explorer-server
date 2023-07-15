@@ -3,9 +3,11 @@ import User from "../user/user.type";
 
 const registerUser = async (payload: User) => {
   // reassign user role default so that user can register himself as admin
-  payload.role = "user";
+  // payload.role = "user";
   const data = await UserModel.create(payload);
-  return data.toObject();
+
+  console.log(data);
+  return data;
 };
 
 const loginUser = async ({
