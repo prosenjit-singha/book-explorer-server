@@ -4,6 +4,7 @@ import validateReq from "../../middlewares/validateReq";
 import UserZodSchema from "../user/user.validation";
 import AuthController from "./auth.controller";
 import { Router } from "express";
+import AuthZodSchema from "./auth.validation";
 
 const AuthRoutes = Router();
 
@@ -13,7 +14,11 @@ AuthRoutes.post(
   AuthController.registerUser,
 );
 
-AuthRoutes.post("/login", AuthController.loginUser);
+AuthRoutes.post(
+  "/login",
+  validateReq(AuthZodSchema.login),
+  AuthController.loginUser,
+);
 AuthRoutes.post(
   "/logout",
   auth("admin", "super-admin", "user"),

@@ -1,7 +1,9 @@
+import { ObjectId } from "mongoose";
+
 export type Book = {
   title: string;
-  author: string;
+  author: ObjectId;
   genre: string;
-  publishedOn: string;
-  reviews: string;
+  publishedOn: Date;
+  reviews: ObjectId;
 };

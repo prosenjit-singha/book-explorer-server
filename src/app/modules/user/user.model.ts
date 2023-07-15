@@ -8,10 +8,22 @@ import httpStatus from "http-status";
 
 const userSchema = new Schema<User, UserModelType, UserMethods>(
   {
-    email: { type: String, required: true, trim: true, unique: true },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      immutable: true,
+    },
     fullName: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
-    phoneNumber: { type: String, trim: true, unique: true, default: null },
+    phoneNumber: {
+      type: String,
+      trim: true,
+      unique: true,
+      default: null,
+      immutable: true,
+    },
     address: { type: String, trim: true, default: null },
     role: { type: String, enum: UserConst.role, required: true },
     status: { type: String, enum: UserConst.status, default: "active" },
@@ -55,6 +67,6 @@ userSchema.static(
   },
 );
 
-const UserModel = model<User, UserModelType>("user", userSchema);
+const UserModel = model<User, UserModelType>("User", userSchema);
 
 export default UserModel;

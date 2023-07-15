@@ -8,7 +8,7 @@ import { jwtHelpers } from "../../helpers/jwt.helper";
 import verifyUser from "../../shared/verifyUser";
 
 const auth =
-  (...requiredRoles: UserRole[]) =>
+  (...requiredRoles: (UserRole | "all")[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // bearer refresh-token-demo-text
@@ -22,7 +22,13 @@ const auth =
         config.jwt.secret_key as Secret,
       );
 
-      if (requiredRoles.length && !requiredRoles.includes(decoded.role)) {
+      console.log(requiredRoles);
+
+      if (
+        requiredRoles.length &&
+        !requiredRoles.includes("all") &&
+        !requiredRoles.includes(decoded.role)
+      ) {
         throw new ApiError(
           httpStatus.FORBIDDEN,
           "Forbidden",

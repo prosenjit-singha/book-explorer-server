@@ -31,6 +31,12 @@ const verifyUser = async (
       "Unauthorized user.",
       "User account has been blocked. Ask admin to activate your account.",
     );
+  } else if (data.status === "inactive") {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      "Unauthorized user.",
+      "Please login first.",
+    );
   }
   return data;
 };
