@@ -19,10 +19,6 @@ AuthRoutes.post(
   validateReq(AuthZodSchema.login),
   AuthController.loginUser,
 );
-AuthRoutes.post(
-  "/logout",
-  auth("admin", "super-admin", "user"),
-  AuthController.logoutUser,
-);
+AuthRoutes.post("/logout", auth("all"), AuthController.logoutUser);
 
 export default AuthRoutes;

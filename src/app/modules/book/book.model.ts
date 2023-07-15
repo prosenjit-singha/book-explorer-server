@@ -1,5 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 import { Book } from "./book.type";
+import BookConst from "./book.const";
 
 const bookSchema = new Schema<Book>(
   {
@@ -10,7 +11,7 @@ const bookSchema = new Schema<Book>(
       required: true,
       immutable: true,
     },
-    genre: { type: String, required: true },
+    genre: { type: String, enum: BookConst.genre, required: true },
     publishedOn: { type: Date, required: true },
     reviews: {
       type: [Types.ObjectId],
