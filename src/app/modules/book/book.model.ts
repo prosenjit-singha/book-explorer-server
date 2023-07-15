@@ -20,6 +20,7 @@ const bookSchema = new Schema<Book, BookModelType, BookMethods>(
       ref: "Reviews",
       default: [],
     },
+    isPublished: { type: Boolean, default: true },
     totalViews: { type: Number, default: 0 },
   },
   { timestamps: true },

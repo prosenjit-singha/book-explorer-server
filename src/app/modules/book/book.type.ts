@@ -7,6 +7,7 @@ export type Book = {
   publishedOn: Date;
   reviews: ObjectId;
   totalViews: number;
+  isPublished: boolean;
 };
 
 export type BookMethods = object;

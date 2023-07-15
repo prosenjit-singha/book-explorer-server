@@ -17,7 +17,11 @@ BookRoutes.post(
 // GET ALL BOOKS
 BookRoutes.get("/", BookController.getAllBooks);
 
-// GET SINGLE BOOK
-BookRoutes.get("/:bookId", BookController.getSingleBook);
+BookRoutes.get("/my-books");
+
+BookRoutes.route("/:bookId")
+  .get(BookController.getSingleBook) // GET SINGLE BOOK
+  .patch(BookController.updateBook) // UPDATE BOOK DETAILS
+  .delete(BookController.deleteBook); // DELETE A BOOK
 
 export default BookRoutes;
