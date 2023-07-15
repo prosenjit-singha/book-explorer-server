@@ -42,11 +42,7 @@ userSchema.static(
     const user = await this.findOne({ $or: orCond });
 
     if (!user) {
-      throw new ApiError(
-        httpStatus.NOT_FOUND,
-        "Failed to crosscheck the user password.",
-        "User not found.",
-      );
+      throw new ApiError(httpStatus.NOT_FOUND, msg, "User not found.");
     }
 
     const isMatched: boolean = await bcrypt.compare(password, user.password);

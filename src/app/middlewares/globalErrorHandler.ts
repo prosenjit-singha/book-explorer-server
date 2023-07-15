@@ -4,7 +4,6 @@ import config from "../../config";
 import httpsStatus from "http-status";
 import { ZodError } from "zod";
 import ApiResponse from "../../types/apiResponse.type";
-import { MongoServerError } from "mongodb";
 import handleZodError from "../../errors/handlers/handleZodError";
 import {
   handleCastError,
@@ -31,15 +30,11 @@ const globalErrorHandler: ErrorRequestHandler = (
     status = httpsStatus.BAD_REQUEST;
     error = handleCastError(err);
     message = "Cast Error Occur";
-  } else if (err instanceof ApiError) {
-    status = err.status;
-    message = err.message;
-    error = err.error;
   } else if (err instanceof ZodError) {
     status = httpsStatus.BAD_REQUEST;
     message = "Validation error occur.";
     error = handleZodError(err);
-  } else if (err instanceof MongoServerError) {
+  } else if (err?.name === "MongoServerError") {
     const simplifiedError = handleDuplicateError(err);
     message = simplifiedError.message;
     error = simplifiedError.error;
@@ -47,6 +42,10 @@ const globalErrorHandler: ErrorRequestHandler = (
     status = httpsStatus.BAD_REQUEST;
     message = "Failed to verify token";
     error = err.message;
+  } else if (err instanceof ApiError) {
+    status = err.status;
+    message = err.message;
+    error = err.error;
   } else if (err instanceof Error) {
     message = err?.message;
   }

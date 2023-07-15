@@ -1,4 +1,5 @@
 // import auth from "../../middlewares/auth";
+import auth from "../../middlewares/auth";
 import validateReq from "../../middlewares/validateReq";
 import UserZodSchema from "../user/user.validation";
 import AuthController from "./auth.controller";
@@ -13,5 +14,10 @@ AuthRoutes.post(
 );
 
 AuthRoutes.post("/login", AuthController.loginUser);
+AuthRoutes.post(
+  "/logout",
+  auth("admin", "super-admin", "user"),
+  AuthController.logoutUser,
+);
 
 export default AuthRoutes;

@@ -15,7 +15,7 @@ const verifyUser = async (
     );
   }
   // verify user
-  const data = await UserModel.findById(user._id);
+  const data = await UserModel.findById(user.id);
 
   if (!data) {
     throw new ApiError(

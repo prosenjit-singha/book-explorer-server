@@ -19,8 +19,8 @@ const catchAsync =
 
       const apiRes: ApiResponse = {
         status: resData.status || 200,
-        message: resData.message || "Success",
         error: resData.error || null,
+        message: resData.message || "Success",
         data: resData.data || null,
         meta: resData?.meta,
       };

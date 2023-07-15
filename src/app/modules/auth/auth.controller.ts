@@ -28,6 +28,15 @@ const loginUser = catchAsync(async (req, res) => {
   };
 });
 
-const AuthController = { registerUser, loginUser };
+const logoutUser = catchAsync(async req => {
+  const data = await AuthService.logoutUser(req.user.id);
+
+  return {
+    data,
+    message: "Logout successful.",
+  };
+});
+
+const AuthController = { registerUser, loginUser, logoutUser };
 
 export default AuthController;

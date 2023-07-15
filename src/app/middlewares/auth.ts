@@ -19,7 +19,7 @@ const auth =
 
       const decoded = jwtHelpers.verifyToken(
         token,
-        config.jwt.secret as Secret,
+        config.jwt.secret_key as Secret,
       );
 
       if (requiredRoles.length && !requiredRoles.includes(decoded.role)) {
@@ -34,7 +34,7 @@ const auth =
       await verifyUser(decoded, "Unauthorize user.");
 
       req.user = {
-        id: decoded._id,
+        id: decoded.id,
         email: decoded.email,
         role: decoded.role,
       };
