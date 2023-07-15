@@ -36,6 +36,34 @@ const getSingleBook = catchAsync(async (req) => {
   };
 });
 
-const BookController = { createBook, getAllBooks, getSingleBook };
+const updateBook = catchAsync(async (req) => {
+  const payload = pick(req.body, BookConst.updatableFields);
+  const userId = req.user.id;
+  const bookId = req.params.bookId;
+  const book = await BookService.updateBook(bookId, userId, payload);
+
+  return {
+    data: book,
+    message: "Book has been successfully updated.",
+  };
+});
+
+const deleteBook = catchAsync(async (req) => {
+  const userId = req.user.id;
+  const bookId = req.params.bookId;
+  const data = await BookService.deleteBook(bookId, userId);
+  return {
+    data,
+    message: "Book has been deleted successfully.",
+  };
+});
+
+const BookController = {
+  createBook,
+  getAllBooks,
+  getSingleBook,
+  deleteBook,
+  updateBook,
+};
 
 export default BookController;

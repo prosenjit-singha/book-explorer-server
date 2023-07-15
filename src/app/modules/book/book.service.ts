@@ -1,4 +1,4 @@
-import mongoose, { SortOrder } from "mongoose";
+import mongoose, { SortOrder, Types } from "mongoose";
 import ApiResponse from "../../../types/apiResponse.type";
 import { PaginationOptions } from "../../../types/pagination.type";
 import BookModel from "./book.model";
@@ -132,6 +132,41 @@ const getSingleBook = async (bookId: string) => {
   return book;
 };
 
-const BookService = { createBook, getAllBooks, getSingleBook };
+const updateBook = async (
+  bookId: string,
+  userId: string,
+  payload: Partial<Book>,
+) => {
+  await BookModel.verifyAuthor(
+    bookId,
+    userId,
+    "Failed to update book details.",
+  );
+
+  const data = await BookModel.findOneAndUpdate({ _id: bookId }, payload)
+    .select("-__v -reviews")
+    .lean()
+    .exec();
+
+  return data;
+};
+
+const deleteBook = async (bookId: string, userId: string) => {
+  await BookModel.verifyAuthor(bookId, userId, "Failed to delete the book.");
+
+  const book = await BookModel.findOneAndDelete({
+    _id: new Types.ObjectId(bookId),
+  }).select("-__v, -reviews");
+
+  return book;
+};
+
+const BookService = {
+  createBook,
+  getAllBooks,
+  getSingleBook,
+  updateBook,
+  deleteBook,
+};
 
 export default BookService;

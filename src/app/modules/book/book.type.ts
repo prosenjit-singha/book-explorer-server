@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Model, ObjectId } from "mongoose";
 
 export type Book = {
   title: string;
@@ -7,4 +7,10 @@ export type Book = {
   publishedOn: Date;
   reviews: ObjectId;
   totalViews: number;
+};
+
+export type BookMethods = object;
+
+export type BookModelType = Model<Book, object, BookMethods> & {
+  verifyAuthor: (bookId: string, userId: string, msg: string) => Promise<void>;
 };

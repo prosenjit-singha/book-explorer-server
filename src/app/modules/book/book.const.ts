@@ -12,6 +12,13 @@ const filterableFields = [
   "publishedOn",
 ];
 
-const BookConst = { genre, searchableFields, filterableFields };
+const updatableFields = ["title", "genre", "publishedOn", "status"];
+
+const BookConst = {
+  genre,
+  searchableFields,
+  filterableFields,
+  updatableFields,
+};
 
 export default BookConst;
