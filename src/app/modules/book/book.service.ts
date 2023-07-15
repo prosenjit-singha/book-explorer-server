@@ -10,7 +10,6 @@ import httpStatus from "http-status";
 
 const createBook = async (payload: Book) => {
   const data = await BookModel.create(payload);
-  console.log(data);
   return data;
 };
 
@@ -143,7 +142,9 @@ const updateBook = async (
     "Failed to update book details.",
   );
 
-  const data = await BookModel.findOneAndUpdate({ _id: bookId }, payload)
+  const data = await BookModel.findOneAndUpdate({ _id: bookId }, payload, {
+    new: true,
+  })
     .select("-__v -reviews")
     .lean()
     .exec();

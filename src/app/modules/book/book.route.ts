@@ -21,7 +21,11 @@ BookRoutes.get("/my-books");
 
 BookRoutes.route("/:bookId")
   .get(BookController.getSingleBook) // GET SINGLE BOOK
-  .patch(BookController.updateBook) // UPDATE BOOK DETAILS
-  .delete(BookController.deleteBook); // DELETE A BOOK
+  .patch(
+    validateReq(BookZodSchema.book.deepPartial()),
+    auth("all"),
+    BookController.updateBook,
+  ) // UPDATE BOOK DETAILS
+  .delete(auth("all"), BookController.deleteBook); // DELETE A BOOK
 
 export default BookRoutes;

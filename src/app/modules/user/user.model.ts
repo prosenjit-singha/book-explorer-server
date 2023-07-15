@@ -20,8 +20,8 @@ const userSchema = new Schema<User, UserModelType, UserMethods>(
     phoneNumber: {
       type: String,
       trim: true,
+      required: true,
       unique: true,
-      default: null,
       immutable: true,
     },
     address: { type: String, trim: true, default: null },

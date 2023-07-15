@@ -2,12 +2,24 @@ import config from "../../../config";
 import catchAsync from "../../../shared/catchAsync";
 import AuthService from "./auth.service";
 
-const registerUser = catchAsync(async (req) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password, ...data } = await AuthService.registerUser(req.body);
+const registerUser = catchAsync(async (req, res) => {
+  const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    user: { password, ...userData },
+    accessToken,
+    refreshToken,
+  } = await AuthService.registerUser(req.body);
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+  });
 
   return {
-    data,
+    data: {
+      accessToken,
+      user: userData,
+    },
     message: "User has been successfully registered.",
   };
 });

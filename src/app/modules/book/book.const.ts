@@ -12,7 +12,12 @@ const filterableFields = [
   "publishedOn",
 ];
 
-const updatableFields = ["title", "genre", "publishedOn", "status"];
+const updatableFields: (keyof Book)[] = [
+  "title",
+  "genre",
+  "publishedOn",
+  "isPublished",
+];
 
 const BookConst = {
   genre,

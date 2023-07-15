@@ -8,8 +8,27 @@ import User from "../user/user.type";
 const registerUser = async (payload: User) => {
   // reassign user role default so that user can register himself as admin
   payload.role = "user";
-  const data = await UserModel.create(payload);
-  return data.toObject();
+  const user = await UserModel.create(payload);
+
+  const jwtPayload = {
+    id: user._id,
+    email: user.email,
+    role: user.role,
+  };
+
+  const accessToken = jwtHelpers.createToken(
+    jwtPayload,
+    config.jwt.secret_key,
+    config.jwt.expires_in,
+  );
+
+  const refreshToken = jwtHelpers.createToken(
+    jwtPayload,
+    config.jwt.refresh_secret_key,
+    config.jwt.refresh_expires_in,
+  );
+
+  return { accessToken, refreshToken, user: user.toObject() };
 };
 
 const loginUser = async ({
