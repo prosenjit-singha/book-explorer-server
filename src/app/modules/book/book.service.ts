@@ -1,10 +1,12 @@
-import { SortOrder } from "mongoose";
+import mongoose, { SortOrder } from "mongoose";
 import ApiResponse from "../../../types/apiResponse.type";
 import { PaginationOptions } from "../../../types/pagination.type";
 import BookModel from "./book.model";
 import { Book } from "./book.type";
 import BookConst from "./book.const";
 import calcPagination from "../../../helpers/pagination.helper";
+import ApiError from "../../../errors/apiError";
+import httpStatus from "http-status";
 
 const createBook = async (payload: Book) => {
   const data = await BookModel.create(payload);
@@ -86,6 +88,50 @@ const getAllBooks = async (
   return { data, meta };
 };
 
-const BookService = { createBook, getAllBooks };
+const getSingleBook = async (bookId: string) => {
+  const book = await BookModel.aggregate([
+    {
+      $match: { _id: new mongoose.Types.ObjectId(bookId) },
+    },
+    // populate author name
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "authorDetails",
+      },
+    },
+    {
+      $unwind: { path: "$authorDetails" },
+    },
+    {
+      $addFields: {
+        "author.fullName": "$authorDetails.fullName",
+        "author.gender": "$authorDetails.gender",
+        "author.email": "$authorDetails.email",
+        totalReviews: { $size: "$reviews" },
+      },
+    },
+    {
+      $project: {
+        __v: 0,
+        reviews: 0,
+        authorDetails: 0,
+      },
+    },
+  ]);
+
+  if (!book.length)
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "Failed to retrieve book details.",
+      "Book doesn't exist.",
+    );
+
+  return book;
+};
+
+const BookService = { createBook, getAllBooks, getSingleBook };
 
 export default BookService;

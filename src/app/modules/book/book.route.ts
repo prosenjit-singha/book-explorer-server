@@ -6,6 +6,7 @@ import BookZodSchema from "./book.validation";
 
 const BookRoutes = Router();
 
+// ADD A BOOK
 BookRoutes.post(
   "/",
   validateReq(BookZodSchema.book),
@@ -13,6 +14,10 @@ BookRoutes.post(
   BookController.createBook,
 );
 
-BookRoutes.get("/", auth("all"), BookController.getAllBooks);
+// GET ALL BOOKS
+BookRoutes.get("/", BookController.getAllBooks);
+
+// GET SINGLE BOOK
+BookRoutes.get("/:bookId", BookController.getSingleBook);
 
 export default BookRoutes;
