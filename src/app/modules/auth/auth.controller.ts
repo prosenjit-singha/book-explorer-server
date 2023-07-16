@@ -40,8 +40,10 @@ const loginUser = catchAsync(async (req, res) => {
   };
 });
 
-const logoutUser = catchAsync(async (req) => {
+const logoutUser = catchAsync(async (req, res) => {
   const data = await AuthService.logoutUser(req.user.id);
+
+  res.clearCookie("refreshToken");
 
   return {
     data,
@@ -55,8 +57,6 @@ const refreshToken = catchAsync(async (req, res) => {
   const { accessToken, user } = await AuthService.refreshToken(refreshToken);
 
   res.cookie("refreshToken", refreshToken, config.cookieOptions);
-
-  console.log(user);
 
   return {
     message: "New access token generated successfully!",
