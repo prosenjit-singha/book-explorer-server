@@ -4,9 +4,10 @@ import ApiError from "../../../errors/apiError";
 import { jwtHelpers } from "../../../helpers/jwt.helper";
 import UserModel from "../user/user.model";
 import User from "../user/user.type";
+import { Secret } from "jsonwebtoken";
 
 const registerUser = async (payload: User) => {
-  // reassign user role default so that user can register himself as admin
+  // reassign user role default so that user can register himself as user
   payload.role = "user";
   const user = await UserModel.create(payload);
 
@@ -96,6 +97,38 @@ const logoutUser = async (userId: string) => {
   return { _id: result._id, fullName: result.fullName, email: result.email };
 };
 
+const refreshToken = async (token: string) => {
+  let verifiedPayload = null;
+
+  try {
+    verifiedPayload = jwtHelpers.verifyToken(
+      token,
+      config.jwt.refresh_secret_key as Secret,
+    );
+  } catch (err) {
+    throw new ApiError(httpStatus.FORBIDDEN, "Invalid Refresh Token");
+  }
+
+  const user = await UserModel.findById(verifiedPayload.id).lean().exec();
+
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist");
+  }
+
+  const { id, email, role } = verifiedPayload;
+
+  const newAccessToken = jwtHelpers.createToken(
+    { id, email, role },
+    config.jwt.secret_key as Secret,
+    config.jwt.expires_in as string,
+  );
+
+  return {
+    accessToken: newAccessToken,
+    user,
+  };
+};
+
 const changePassword = async () => {};
 
 const AuthService = {
@@ -103,6 +136,7 @@ const AuthService = {
   loginUser,
   logoutUser,
   changePassword,
+  refreshToken,
 };
 
 export default AuthService;

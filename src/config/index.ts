@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import dotenv from "dotenv";
 import { Secret } from "jsonwebtoken";
 import path from "path";
@@ -5,6 +6,12 @@ import path from "path";
 dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 type NodeENV = "development" | "production";
+
+const cookieOptions = {
+  secure: process.env.NODE_ENV === "production",
+  httpOnly: true,
+  expires: dayjs().add(10, "days").toDate(),
+};
 
 const jwt = {
   secret_key: process.env.JWT_SECRET_KEY as Secret,
@@ -19,4 +26,5 @@ export default {
   jwt,
   bcrypt_salt_round: process.env.BCRYPT_SALT_ROUND,
   database_url: process.env.DATABASE_URL as string,
+  cookieOptions,
 };

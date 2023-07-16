@@ -29,7 +29,7 @@ const auth =
       ) {
         throw new ApiError(
           httpStatus.FORBIDDEN,
-          "Forbidden",
+          "Forbidden2",
           "Operation not allowed",
         );
       }

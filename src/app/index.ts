@@ -6,8 +6,14 @@ import handleNotFoundAPI from "./middlewares/notFoundAPI";
 import cookieParser from "cookie-parser";
 const app = express();
 
-// parser
-app.use(cors());
+// PARSERS
+app.use(
+  "*",
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use(express.json());
 

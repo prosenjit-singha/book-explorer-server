@@ -19,6 +19,9 @@ AuthRoutes.post(
   validateReq(AuthZodSchema.login),
   AuthController.loginUser,
 );
+
+AuthRoutes.get("/refresh-token", auth("all"), AuthController.refreshToken);
+
 AuthRoutes.post("/logout", auth("all"), AuthController.logoutUser);
 
 export default AuthRoutes;

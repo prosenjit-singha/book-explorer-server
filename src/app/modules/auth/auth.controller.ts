@@ -49,6 +49,21 @@ const logoutUser = catchAsync(async (req) => {
   };
 });
 
-const AuthController = { registerUser, loginUser, logoutUser };
+const refreshToken = catchAsync(async (req, res) => {
+  const { refreshToken } = req.cookies;
+
+  const { accessToken, user } = await AuthService.refreshToken(refreshToken);
+
+  res.cookie("refreshToken", refreshToken, config.cookieOptions);
+
+  console.log(user);
+
+  return {
+    message: "New access token generated successfully!",
+    data: { accessToken, user },
+  };
+});
+
+const AuthController = { registerUser, loginUser, logoutUser, refreshToken };
 
 export default AuthController;
