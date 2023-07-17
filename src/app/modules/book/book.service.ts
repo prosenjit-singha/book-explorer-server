@@ -37,7 +37,7 @@ const getAllBooks = async (
   if (Object.keys(filtersData).length) {
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => {
-        // minPrice
+        // match by year
         if (field === "publishedOn") {
           return {
             $expr: {
@@ -46,7 +46,11 @@ const getAllBooks = async (
           };
         }
 
-        // location
+        // match by creator id
+        if (field === "createdBy") {
+          return { [field]: value };
+        }
+
         return {
           [field]: {
             $regex: new RegExp(`^${value}$`, "i"), // Perform case-insensitive regex exact match

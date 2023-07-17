@@ -3,8 +3,9 @@ import { Review } from "./review.type";
 
 const getAllReviews = async (bookId: string) => {
   const data = await ReviewModel.find({ bookId })
-    .populate("userId", "fullName")
     .sort({ createdAt: "desc" })
+    .populate("user", "fullName")
+    .select("-__v -bookId -updatedAt")
     .lean()
     .exec();
 

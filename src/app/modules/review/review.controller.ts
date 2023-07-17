@@ -8,7 +8,7 @@ const getAllReviews = catchAsync(async (req) => {
 });
 
 const postReview = catchAsync(async (req) => {
-  const payload = { ...req.body, userId: req.user.id };
+  const payload = { ...req.body, user: req.user.id };
   const data = await ReviewService.postReview(payload);
   return {
     message: "Review successfully added.",

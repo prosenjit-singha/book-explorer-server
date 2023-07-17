@@ -40,6 +40,7 @@ const filterableFields = [
   "maxPrice",
   "genre",
   "publishedOn",
+  "createdBy",
 ];
 
 const updatableFields: (keyof Book)[] = [
