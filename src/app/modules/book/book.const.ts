@@ -48,6 +48,7 @@ const updatableFields: (keyof Book)[] = [
   "genre",
   "publishedOn",
   "isPublished",
+  "author",
 ];
 
 const BookConst = {
