@@ -2,12 +2,13 @@ import { Model, ObjectId } from "mongoose";
 
 export type Book = {
   title: string;
-  author: ObjectId;
+  author: string;
   genre: string;
   publishedOn: Date;
   reviews: ObjectId;
   totalViews: number;
   isPublished: boolean;
+  createdBy: ObjectId;
 };
 
 export type BookMethods = object;

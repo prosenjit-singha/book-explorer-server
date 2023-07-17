@@ -6,6 +6,7 @@ const book = z.object({
     .object({
       title: z.string(),
       genre: z.enum(BookConst.genre),
+      author: z.string(),
       publishedOn: z.coerce.date(),
       isPublished: z.boolean().optional(),
     })

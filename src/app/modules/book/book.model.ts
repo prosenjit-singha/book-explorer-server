@@ -7,12 +7,13 @@ import httpStatus from "http-status";
 const bookSchema = new Schema<Book, BookModelType, BookMethods>(
   {
     title: { type: String, trim: true, required: true },
-    author: {
+    createdBy: {
       type: Types.ObjectId,
       ref: "User",
       required: true,
       immutable: true,
     },
+    author: { type: String, trim: true, required: true },
     genre: { type: String, enum: BookConst.genre, required: true },
     publishedOn: { type: Date, required: true },
     reviews: {
@@ -34,7 +35,7 @@ bookSchema.static(
     if (!book)
       throw new ApiError(httpStatus.NOT_FOUND, msg, "Book doesn't exist.");
 
-    if (String(book.author) !== userId) {
+    if (String(book.createdBy) !== userId) {
       throw new ApiError(
         httpStatus.FORBIDDEN,
         msg,

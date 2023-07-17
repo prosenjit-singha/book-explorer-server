@@ -30,7 +30,7 @@ const genre = [
   "Science Non-fiction",
   "Western",
   "Humor/Comedy",
-];
+] as const;
 
 const searchableFields: (keyof Book)[] = ["title", "genre", "author"];
 

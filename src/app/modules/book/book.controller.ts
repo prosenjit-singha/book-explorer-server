@@ -5,7 +5,7 @@ import BookConst from "./book.const";
 import BookService from "./book.service";
 
 const createBook = catchAsync(async (req) => {
-  const payload = { ...req.body, author: req.user.id };
+  const payload = { ...req.body, createdBy: req.user.id };
   const data = await BookService.createBook(payload);
 
   return {

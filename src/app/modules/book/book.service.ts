@@ -94,23 +94,8 @@ const getSingleBook = async (bookId: string) => {
     {
       $match: { _id: new mongoose.Types.ObjectId(bookId) },
     },
-    // populate author name
-    {
-      $lookup: {
-        from: "users",
-        localField: "author",
-        foreignField: "_id",
-        as: "authorDetails",
-      },
-    },
-    {
-      $unwind: { path: "$authorDetails" },
-    },
     {
       $addFields: {
-        "author.fullName": "$authorDetails.fullName",
-        "author.gender": "$authorDetails.gender",
-        "author.email": "$authorDetails.email",
         totalReviews: { $size: "$reviews" },
       },
     },
@@ -118,7 +103,6 @@ const getSingleBook = async (bookId: string) => {
       $project: {
         __v: 0,
         reviews: 0,
-        authorDetails: 0,
       },
     },
   ]);
