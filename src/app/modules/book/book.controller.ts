@@ -18,11 +18,15 @@ const getAllBooks = catchAsync(async (req) => {
   const filters = pick(req.query, BookConst.filterableFields);
   const paginationOptions = pick(req.query, PaginationConst.fields);
 
-  const data = await BookService.getAllBooks(filters, paginationOptions);
+  const { data, meta } = await BookService.getAllBooks(
+    filters,
+    paginationOptions,
+  );
 
   return {
     message: "Books has been successfully retrieved.",
     data,
+    meta,
   };
 });
 

@@ -63,8 +63,8 @@ const getAllBooks = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const data = await BookModel.find(whereConditions)
-    .select("-reviews")
+  const data = await BookModel.find(whereConditions, { reviews: 0 })
+    .populate("author", "fullName -_id")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)

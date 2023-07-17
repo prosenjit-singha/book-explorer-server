@@ -19,6 +19,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction,
 ) => {
+  console.log(err);
   let status: number = httpsStatus.INTERNAL_SERVER_ERROR;
   let message: string = "Something went wrong!";
   let error: ApiResponse["error"] | null = null;
