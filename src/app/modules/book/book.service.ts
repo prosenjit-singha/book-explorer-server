@@ -40,7 +40,9 @@ const getAllBooks = async (
         // minPrice
         if (field === "publishedOn") {
           return {
-            publishedOn: { $eq: new Date(value as string) },
+            $expr: {
+              $eq: [{ $year: "$publishedOn" }, value],
+            },
           };
         }
 
@@ -128,7 +130,7 @@ const getSingleBook = async (bookId: string) => {
       "Book doesn't exist.",
     );
 
-  return book;
+  return book[0];
 };
 
 const updateBook = async (
