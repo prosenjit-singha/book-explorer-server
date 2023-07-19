@@ -5,7 +5,7 @@ const getAllWishlist = catchAsync(async (req) => {
   const userId = req.user.id;
   const data = await WishlistService.getAllWishlist(userId);
   return {
-    message: "",
+    message: "Wishlist retrieved.",
     data,
   };
 });
@@ -14,16 +14,16 @@ const addToWishlist = catchAsync(async (req) => {
   const { bookId } = req.body;
   const data = await WishlistService.addToWishlist(userId, bookId);
   return {
-    message: "",
+    message: "Book added to wishlist.",
     data,
   };
 });
 
 const removeFromWishlist = catchAsync(async (req) => {
-  const { wishlistId } = req.params;
-  const data = await WishlistService.removeFromWishlist(wishlistId);
+  const { id } = req.params;
+  const data = await WishlistService.removeFromWishlist(id);
   return {
-    message: "",
+    message: "Book removed from wishlist.",
     data,
   };
 });

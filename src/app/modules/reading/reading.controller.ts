@@ -5,7 +5,7 @@ const getAllReadingBooks = catchAsync(async (req) => {
   const userId = req.user.id;
   const data = await WishlistService.getAllReadingBookList(userId);
   return {
-    message: "",
+    message: "Reading book list retrieved.",
     data,
   };
 });
@@ -14,16 +14,16 @@ const addToReadingList = catchAsync(async (req) => {
   const { bookId } = req.body;
   const data = await WishlistService.addToReadingList(userId, bookId);
   return {
-    message: "",
+    message: "Book added to reading list.",
     data,
   };
 });
 
 const removeFromReadingList = catchAsync(async (req) => {
-  const { wishlistId } = req.params;
-  const data = await WishlistService.removeFromReadingList(wishlistId);
+  const { id } = req.params;
+  const data = await WishlistService.removeFromReadingList(id);
   return {
-    message: "",
+    message: "Book removed from reading list.",
     data,
   };
 });
@@ -31,7 +31,7 @@ const updateReadingStatus = catchAsync(async (req) => {
   const { id } = req.params;
   const data = await WishlistService.updateReadingStatus(id, req.body);
   return {
-    message: "",
+    message: "Reading status updated.",
     data,
   };
 });

@@ -7,7 +7,7 @@ const WishlistRoutes = express.Router();
 WishlistRoutes.get("/", auth("all"), WishlistController.getAllWishlist);
 WishlistRoutes.post("/", auth("all"), WishlistController.addToWishlist);
 WishlistRoutes.delete(
-  "/:wishlistId",
+  "/:id",
   auth("all"),
   WishlistController.removeFromWishlist,
 );
