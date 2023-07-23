@@ -1,20 +1,20 @@
 import express from "express";
 import auth from "../../middlewares/auth";
-import WishlistController from "./reading.controller";
+import ReadingController from "./reading.controller";
 
 const ReadingBooksRoutes = express.Router();
 
-ReadingBooksRoutes.get("/", auth("all"), WishlistController.getAllReadingBooks);
-ReadingBooksRoutes.post("/", auth("all"), WishlistController.addToReadingList);
+ReadingBooksRoutes.get("/", auth("all"), ReadingController.getAllReadingBooks);
+ReadingBooksRoutes.post("/", auth("all"), ReadingController.addToReadingList);
 ReadingBooksRoutes.delete(
   "/:id",
   auth("all"),
-  WishlistController.removeFromReadingList,
+  ReadingController.removeFromReadingList,
 );
 ReadingBooksRoutes.patch(
   "/:id",
   auth("all"),
-  WishlistController.updateReadingStatus,
+  ReadingController.updateReadingStatus,
 );
 
 export default ReadingBooksRoutes;

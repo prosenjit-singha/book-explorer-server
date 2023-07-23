@@ -15,6 +15,9 @@ const getAllReadingBookList = async (userId: string) => {
         as: "book",
       },
     },
+    {
+      $unwind: "$book",
+    },
   ]);
   return data;
 };

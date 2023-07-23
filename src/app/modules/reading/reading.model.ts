@@ -11,6 +11,6 @@ const readingBookSchema = new Schema<ReadingBook>(
   { timestamps: true },
 );
 
-const ReadingBookModel = model<ReadingBook>("Wishlist", readingBookSchema);
+const ReadingBookModel = model<ReadingBook>("ReadingBook", readingBookSchema);
 
 export default ReadingBookModel;

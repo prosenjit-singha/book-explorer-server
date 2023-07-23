@@ -4,7 +4,7 @@ import Wishlist from "./wishlist.type";
 const wishlistSchema = new Schema<Wishlist>(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
-    bookId: { type: Types.ObjectId, ref: "Book", required: true },
+    bookId: { type: Types.ObjectId, ref: "Book", required: true, unique: true },
   },
   { timestamps: true },
 );

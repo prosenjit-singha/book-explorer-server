@@ -14,12 +14,15 @@ const getAllWishlist = async (userId: string) => {
         as: "book",
       },
     },
+    {
+      $unwind: "$book",
+    },
   ]);
   return data;
 };
 
-const removeFromWishlist = async (id: string) => {
-  const data = await WishlistModel.findOneAndDelete({ _id: id }).lean().exec();
+const removeFromWishlist = async (bookId: string) => {
+  const data = await WishlistModel.findOneAndDelete({ bookId }).lean().exec();
 
   if (!data) {
     throw new ApiError(
